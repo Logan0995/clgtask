@@ -120,4 +120,70 @@ export const StoreProvider = ({ children }) => {
         }
     };
 
-    const setIssueRequests = async (newRequ
+    const setIssueRequests = async (newRequests) => {
+        try {
+            if (newRequests.length > issueRequests.length) {
+                // ADD
+                const added = newRequests[newRequests.length - 1];
+                await axios.post(`${API_URL}/requests`, added);
+            } else if (newRequests.length < issueRequests.length) {
+                // DELETE
+                const deleted = issueRequests.filter(r => !newRequests.find(nr => nr._id === r._id))[0];
+                if (deleted && deleted._id) await axios.delete(`${API_URL}/requests/${deleted._id}`);
+            } else {
+                // UPDATE
+                for (let i = 0; i < newRequests.length; i++) {
+                    const original = issueRequests.find(r => r._id === newRequests[i]._id);
+                    if (original && JSON.stringify(newRequests[i]) !== JSON.stringify(original)) {
+                        await axios.put(`${API_URL}/requests/${newRequests[i]._id}`, newRequests[i]);
+                    }
+                }
+            }
+            // Fetch fresh to get MongoDB _ids if needed
+            const res = await axios.get(`${API_URL}/requests`);
+            setIssueRequestsState(res.data);
+        } catch (error) {
+            console.error("Error syncing requests:", error);
+        }
+    };
+
+    // Keep session in local storage for refresh
+    useEffect(() => {
+        if (activeUser) {
+            localStorage.setItem('activeUser', activeUser);
+            localStorage.setItem('activeUserName', activeUserName || '');
+            localStorage.setItem('activeUserRole', activeUserRole || '');
+        } else {
+            localStorage.removeItem('activeUser');
+            localStorage.removeItem('activeUserName');
+            localStorage.removeItem('activeUserRole');
+        }
+    }, [activeUser, activeUserName, activeUserRole]);
+
+    const login = async (userId, userName, role) => {
+        // The actual authentication is now handled in Login.jsx by calling /api/login
+        setActiveUser(userId);
+        setActiveUserName(userName);
+        setActiveUserRole(role);
+    };
+
+    const logout = () => {
+        setActiveUser(null);
+        setActiveUserName(null);
+        setActiveUserRole(null);
+    };
+
+    return (
+        <StoreContext.Provider value={{
+            books, setBooks,
+            members, setMembers,
+            historyStore, setHistoryStore,
+            recommendations, setRecommendations,
+            issueRequests, setIssueRequests,
+            activeUser, activeUserName, activeUserRole,
+            login, logout
+        }}>
+            {children}
+        </StoreContext.Provider>
+    );
+};

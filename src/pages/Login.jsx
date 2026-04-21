@@ -159,4 +159,17 @@ const Login = () => {
 
                     <button type="submit" className="btn-primary w-100" style={{ marginTop: '1rem' }}>
                         {isLogin ? 'Login Securely' : 'Sign Up & Enter'}
-       
+                    </button>
+
+                    <div className="form-footer" style={{ marginTop: '1.5rem' }}>
+                        <Link to="/" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'underline' }}>
+                            &larr; Back to Home
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default Login;
