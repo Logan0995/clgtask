@@ -1,0 +1,72 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Register Member</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="dashboard-body">
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><span>📚</span><h2>Central Library</h2></div>
+            <button id="toggleSidebar" class="toggle-btn">☰</button>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">🏠 <span class="nav-text">Dashboard</span></a></li>
+            <li><a href="books.html">📖 <span class="nav-text">View Catalog</span></a></li>
+            <li><a href="add-book.html">➕ <span class="nav-text">Add Book</span></a></li>
+            <li><a href="members.html">👥 <span class="nav-text">View Members</span></a></li>
+            <li class="active"><a href="add-member.html">➕ <span class="nav-text">Add Member</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="../login.html" class="logout-link">← <span class="nav-text">Logout</span></a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <header class="top-nav">
+            <div class="search-bar"><input type="text" id="searchInput" placeholder="Search..."></div>
+            <div class="user-profile"><div class="profile-info"><div class="avatar">A</div><div class="details"><span class="name">Admin Supervisor</span><span class="role">Administrator</span></div></div></div>
+        </header>
+        <div class="page-section active-section">
+            <div class="dashboard-content">
+                <div class="page-header" style="text-align:center;">
+                    <h1>Register Member</h1>
+                    <p>Add a new student, faculty, or staff member to the system.</p>
+                </div>
+                <div class="management-card" style="max-width: 640px; margin: 0 auto;">
+                    <div class="card-header"><h3>👤 Member Details</h3></div>
+                    <div class="card-body" style="padding: 2.5rem;">
+                        <form id="addMemberForm" class="functional-form">
+                            <div class="input-group">
+                                <label>Full Name</label>
+                                <input type="text" id="memberName" placeholder="e.g. Ananya Sharma" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Member ID</label>
+                                <input type="text" id="memberId" placeholder="e.g. S002" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Role</label>
+                                <select id="memberRole" class="functional-form-select" required>
+                                    <option value="">-- Select Role --</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Faculty">Faculty</option>
+                                    <option value="Librarian">Librarian</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary w-100" style="margin-top: 0.75rem; padding: 1rem;">Register Member</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/store.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
+
+-->

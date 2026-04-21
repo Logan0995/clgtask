@@ -1,0 +1,106 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="dashboard-body">
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span>📚</span>
+                <h2>Central Library</h2>
+            </div>
+            <button id="toggleSidebar" class="toggle-btn">☰</button>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="dashboard.html">🏠 <span class="nav-text">Dashboard</span></a></li>
+            <li><a href="books.html">📖 <span class="nav-text">View Catalog</span></a></li>
+            <li><a href="add-book.html">➕ <span class="nav-text">Add Book</span></a></li>
+            <li><a href="members.html">👥 <span class="nav-text">View Members</span></a></li>
+            <li><a href="add-member.html">➕ <span class="nav-text">Add Member</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="../login.html" class="logout-link">← <span class="nav-text">Logout</span></a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="top-nav">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search anything...">
+            </div>
+            <div class="user-profile">
+                <div class="profile-info">
+                    <div class="avatar">A</div>
+                    <div class="details">
+                        <span class="name">Admin Supervisor</span>
+                        <span class="role">Administrator</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-section active-section">
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h1>Overview</h1>
+                    <p>Welcome back, Admin. Here is the library at a glance.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card primary-accent">
+                        <div class="stat-icon primary">📖</div>
+                        <div class="stat-info">
+                            <h3>Total Books</h3>
+                            <h2 id="totalBooksCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="stat-card warning-accent">
+                        <div class="stat-icon warning">👥</div>
+                        <div class="stat-info">
+                            <h3>Total Members</h3>
+                            <h2 id="totalMembersCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="stat-card success-accent">
+                        <div class="stat-icon success">🎓</div>
+                        <div class="stat-info">
+                            <h3>Students</h3>
+                            <h2 id="totalStudentsCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="stat-card rose-accent">
+                        <div class="stat-icon accent">📋</div>
+                        <div class="stat-info">
+                            <h3>Faculty</h3>
+                            <h2 id="totalFacultyCount">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="management-grid mt-4">
+                    <div class="management-card" style="grid-column: 1 / -1;">
+                        <div class="card-header"><h3>⚙ System Administration</h3></div>
+                        <div class="card-body" style="display: flex; gap: 1.25rem; flex-wrap: wrap; padding: 1.5rem;">
+                            <button id="btnAdminReports" class="btn-primary" style="padding: 0.85rem 1.75rem;">Generate Overall Reports</button>
+                            <button id="btnAdminBackup" class="btn-outline" style="padding: 0.85rem 1.75rem;">Backup Database</button>
+                            <button id="btnAdminRestore" class="btn-outline" style="padding: 0.85rem 1.75rem;" onclick="document.getElementById('dbRestoreFile').click()">Restore Database</button>
+                            <input type="file" id="dbRestoreFile" style="display:none;" accept=".json">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
+
+-->

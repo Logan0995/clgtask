@@ -1,0 +1,64 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student | My Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="dashboard-body">
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><span>📚</span><h2>Central Library</h2></div>
+            <button id="toggleSidebar" class="toggle-btn">☰</button>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="dashboard.html">🏠 <span class="nav-text">My Dashboard</span></a></li>
+            <li><a href="books.html">📖 <span class="nav-text">Search Books</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="../login.html" class="logout-link">← <span class="nav-text">Logout</span></a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <header class="top-nav">
+            <div class="search-bar"><input type="text" id="searchInput" placeholder="Search..."></div>
+            <div class="user-profile"><div class="profile-info"><div class="avatar" style="background: linear-gradient(135deg,#6366f1,#8b5cf6);">S</div><div class="details"><span class="name">Student User</span><span class="role">Student</span></div></div></div>
+        </header>
+        <div class="page-section active-section">
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h1>My Dashboard</h1>
+                    <p>Track your currently issued books and pending requests.</p>
+                </div>
+                <div class="management-grid">
+                    <div class="management-card" style="grid-column: 1 / -1;">
+                        <div class="card-header"><h3>📚 My Issued Books</h3></div>
+                        <div class="card-body">
+                            <ul id="myStudentBooksList" class="functional-list"></ul>
+                        </div>
+                    </div>
+                    <div class="management-card" style="grid-column: 1 / -1;">
+                        <div class="card-header"><h3>📬 Request Book Issue</h3></div>
+                        <div class="card-body">
+                            <form id="requestBookForm" class="functional-form">
+                                <div class="input-group">
+                                    <label>Book ID to Request</label>
+                                    <input type="text" id="requestId" placeholder="e.g. B001" required>
+                                </div>
+                                <button type="submit" class="btn-primary w-100" style="padding: 0.9rem;">Send Request to Librarian</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/store.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/student.js"></script>
+</body>
+</html>
+
+-->

@@ -1,0 +1,75 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty | Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="dashboard-body">
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><span>📚</span><h2>Central Library</h2></div>
+            <button id="toggleSidebar" class="toggle-btn">☰</button>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="dashboard.html">🏠 <span class="nav-text">Faculty Dashboard</span></a></li>
+            <li><a href="books.html">📖 <span class="nav-text">Search &amp; Reserve</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="../login.html" class="logout-link">← <span class="nav-text">Logout</span></a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <header class="top-nav">
+            <div class="search-bar"><input type="text" id="searchInput" placeholder="Search..."></div>
+            <div class="user-profile"><div class="profile-info"><div class="avatar" style="background: linear-gradient(135deg,#f59e0b,#d97706);">F</div><div class="details"><span class="name">Faculty Member</span><span class="role">Faculty</span></div></div></div>
+        </header>
+        <div class="page-section active-section">
+            <div class="dashboard-content">
+                <div class="page-header">
+                    <h1>Faculty Dashboard</h1>
+                    <p>Long-term reservations, borrowing history, and recommendations.</p>
+                </div>
+                <div class="management-grid">
+                    <div class="management-card" style="grid-column: 1 / -1;">
+                        <div class="card-header"><h3>📜 Borrowing History</h3></div>
+                        <div class="card-body">
+                            <ul id="facultyHistoryList" class="functional-list"></ul>
+                        </div>
+                    </div>
+                    <div class="management-card">
+                        <div class="card-header"><h3>📌 Reserve a Book</h3></div>
+                        <div class="card-body">
+                            <form id="reserveBookForm" class="functional-form">
+                                <div class="input-group">
+                                    <label>Book ID to Reserve</label>
+                                    <input type="text" id="reserveId" placeholder="e.g. B001" required>
+                                </div>
+                                <button type="submit" class="btn-outline w-100" style="padding:0.9rem;">Confirm Reservation</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="management-card">
+                        <div class="card-header"><h3>💡 Recommend a Book</h3></div>
+                        <div class="card-body">
+                            <form id="recommendBookForm" class="functional-form">
+                                <div class="input-group"><label>Book Title</label><input type="text" id="recTitle" placeholder="e.g. Deep Learning" required></div>
+                                <div class="input-group"><label>Author / Publisher</label><input type="text" id="recAuthor" placeholder="e.g. Ian Goodfellow" required></div>
+                                <div class="input-group"><label>Why is this needed?</label><input type="text" id="recReason" placeholder="For CS-602 coursework..."></div>
+                                <button type="submit" class="btn-primary w-100" style="padding:0.9rem;">Submit Recommendation</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/store.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/faculty.js"></script>
+</body>
+</html>
+
+-->
