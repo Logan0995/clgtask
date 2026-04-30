@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import API from '../api';
 import { StoreContext } from '../contexts/StoreContext';
 import { message } from 'antd';
 
@@ -20,7 +20,7 @@ const Login = () => {
 
         if (isLogin) {
             try {
-                const response = await axios.post('http://localhost:5000/api/login', {
+                const response = await API.post('/api/login', {
                     id: userId,
                     password: password,
                     role: role
@@ -52,7 +52,7 @@ const Login = () => {
             }
 
             try {
-                const response = await axios.post('http://localhost:5000/api/register', {
+                const response = await API.post('/api/register', {
                     id: userId.trim(),
                     name: name.trim(),
                     role: role,

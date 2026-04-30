@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { StoreContext } from '../../contexts/StoreContext';
-import axios from 'axios';
+import API from '../../api';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const LibrarianMembers = () => {
     const { members } = useContext(StoreContext);
@@ -15,7 +15,7 @@ const LibrarianMembers = () => {
     useEffect(() => {
         const fetchAll = async () => {
             try {
-                const res = await axios.get(`${API_URL}/members/all`);
+                const res = await API.get(`${API_URL}/members/all`);
                 setAllMembers(res.data);
             } catch (err) {
                 // fallback to context members

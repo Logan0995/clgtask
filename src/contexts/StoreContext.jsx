@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import API from '../api';
 import { message } from 'antd';
 
 export const StoreContext = createContext();
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
 export const StoreProvider = ({ children }) => {
     const [books, setBooksState] = useState([]);
@@ -23,14 +23,14 @@ export const StoreProvider = ({ children }) => {
         const fetchAllData = async () => {
             try {
                 // Ensure db is seeded
-                await axios.post(`${API_URL}/seed`);
+                await API.post(`${API_URL}/seed`);
 
                 const [booksRes, membersRes, historyRes, recsRes, requestsRes] = await Promise.all([
-                    axios.get(`${API_URL}/books`),
-                    axios.get(`${API_URL}/members`),
-                    axios.get(`${API_URL}/history`),
-                    axios.get(`${API_URL}/recommendations`),
-                    axios.get(`${API_URL}/requests`)
+                    API.get(`${API_URL}/books`),
+                    API.get(`${API_URL}/members`),
+                    API.get(`${API_URL}/history`),
+                    API.get(`${API_URL}/recommendations`),
+                    API.get(`${API_URL}/requests`)
                 ]);
                 
                 setBooksState(booksRes.data);
@@ -61,16 +61,16 @@ export const StoreProvider = ({ children }) => {
             if (newBooks.length > books.length) {
                 // Added
                 const added = newBooks.filter(nb => !books.find(b => b.id === nb.id))[0];
-                if (added) await axios.post(`${API_URL}/books`, added);
+                if (added) await API.post(`${API_URL}/books`, added);
             } else if (newBooks.length < books.length) {
                 // Deleted
                 const deleted = books.filter(b => !newBooks.find(nb => nb.id === b.id))[0];
-                if (deleted) await axios.delete(`${API_URL}/books/${deleted.id}`);
+                if (deleted) await API.delete(`${API_URL}/books/${deleted.id}`);
             } else {
                 // Updated
                 for (let i = 0; i < newBooks.length; i++) {
                     if (JSON.stringify(newBooks[i]) !== JSON.stringify(books.find(b => b.id === newBooks[i].id))) {
-                        await axios.put(`${API_URL}/books/${newBooks[i].id}`, newBooks[i]);
+                        await API.put(`${API_URL}/books/${newBooks[i].id}`, newBooks[i]);
                     }
                 }
             }
@@ -85,13 +85,13 @@ export const StoreProvider = ({ children }) => {
         try {
             if (newMembers.length > members.length) {
                 const added = newMembers.filter(nm => !members.find(m => m.id === nm.id))[0];
-                if (added) await axios.post(`${API_URL}/members`, added);
+                if (added) await API.post(`${API_URL}/members`, added);
             } else if (newMembers.length < members.length) {
                 const deleted = members.filter(m => !newMembers.find(nm => nm.id === m.id))[0];
-                if (deleted) await axios.delete(`${API_URL}/members/${deleted.id}`);
+                if (deleted) await API.delete(`${API_URL}/members/${deleted.id}`);
             }
             // Refresh from server to get latest data
-            const res = await axios.get(`${API_URL}/members`);
+            const res = await API.get(`${API_URL}/members`);
             setMembersState(res.data);
         } catch (error) {
             console.error("Error syncing members:", error);
@@ -104,7 +104,7 @@ export const StoreProvider = ({ children }) => {
         try {
             if (newHistory.length > historyStore.length) {
                 const added = newHistory[newHistory.length - 1]; // usually added at end
-                await axios.post(`${API_URL}/history`, added);
+                await API.post(`${API_URL}/history`, added);
             }
             setHistoryStoreState(newHistory);
         } catch (error) {
@@ -116,7 +116,7 @@ export const StoreProvider = ({ children }) => {
         try {
             if (newRecs.length > recommendations.length) {
                 const added = newRecs[newRecs.length - 1];
-                await axios.post(`${API_URL}/recommendations`, added);
+                await API.post(`${API_URL}/recommendations`, added);
             }
             setRecommendationsState(newRecs);
         } catch (error) {
@@ -129,22 +129,22 @@ export const StoreProvider = ({ children }) => {
             if (newRequests.length > issueRequests.length) {
                 // ADD
                 const added = newRequests[newRequests.length - 1];
-                await axios.post(`${API_URL}/requests`, added);
+                await API.post(`${API_URL}/requests`, added);
             } else if (newRequests.length < issueRequests.length) {
                 // DELETE
                 const deleted = issueRequests.filter(r => !newRequests.find(nr => nr._id === r._id))[0];
-                if (deleted && deleted._id) await axios.delete(`${API_URL}/requests/${deleted._id}`);
+                if (deleted && deleted._id) await API.delete(`${API_URL}/requests/${deleted._id}`);
             } else {
                 // UPDATE
                 for (let i = 0; i < newRequests.length; i++) {
                     const original = issueRequests.find(r => r._id === newRequests[i]._id);
                     if (original && JSON.stringify(newRequests[i]) !== JSON.stringify(original)) {
-                        await axios.put(`${API_URL}/requests/${newRequests[i]._id}`, newRequests[i]);
+                        await API.put(`${API_URL}/requests/${newRequests[i]._id}`, newRequests[i]);
                     }
                 }
             }
             // Fetch fresh to get MongoDB _ids if needed
-            const res = await axios.get(`${API_URL}/requests`);
+            const res = await API.get(`${API_URL}/requests`);
             setIssueRequestsState(res.data);
         } catch (error) {
             console.error("Error syncing requests:", error);
