@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import Layout from '../../components/Layout';
+import { message } from 'antd';
 import { StoreContext } from '../../contexts/StoreContext';
 
 const Fines = () => {

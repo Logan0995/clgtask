@@ -36,12 +36,12 @@ window.defaultBooks = [
         coverUrl: 'books/cc.jpg'
     },
     {
-        id: 'B003',
-        title: 'University Physics',
-        author: 'Young and Freedman',
-        category: 'Physics',
+        id: 'B008',
+        title: 'Pride and Prejudice',
+        author: 'Jane Austen',
+        category: 'Fiction',
         status: 'Available', issuedTo: null, dueDate: null,
-        coverUrl: 'books/phy.jpg'
+        coverUrl: 'books/pp.jpg'
     },
     {
         id: 'B012',
@@ -75,6 +75,14 @@ window.defaultBooks = [
         category: 'Fiction',
         status: 'Available', issuedTo: null, dueDate: null,
         coverUrl: 'books/pp.jpg'
+    },
+    {
+        id: 'B003',
+        title: 'University Physics',
+        author: 'Young and Freedman',
+        category: 'Physics',
+        status: 'Available', issuedTo: null, dueDate: null,
+        coverUrl: 'books/phy.jpg'
     },
     {
         id: 'B001',

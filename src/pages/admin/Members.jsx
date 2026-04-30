@@ -6,8 +6,13 @@ const Members = () => {
     const { members, setMembers } = useContext(StoreContext);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const handleRemoveMember = (idToRemove) => {
-        setMembers(members.filter(m => m.id !== idToRemove));
+    const handleRemoveMember = async (idToRemove) => {
+        if (!window.confirm('Are you sure you want to remove this member?')) return;
+        try {
+            await setMembers(members.filter(m => m.id !== idToRemove));
+        } catch (err) {
+            alert('Failed to remove member. Please try again.');
+        }
     };
 
     const filteredMembers = members.filter(m =>
@@ -26,7 +31,7 @@ const Members = () => {
         >
             <div className="management-grid">
                 <div className="management-card" style={{ gridColumn: '1 / -1' }}>
-                    <div className="card-header"><h3>👥 Registered Members</h3></div>
+                    <div className="card-header"><h3>👥 Registered Members ({filteredMembers.length})</h3></div>
                     <div className="card-body">
                         <ul className="functional-list">
                             {filteredMembers.length === 0 ? (

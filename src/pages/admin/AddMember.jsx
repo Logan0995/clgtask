@@ -10,8 +10,10 @@ const AddMember = () => {
     const [name, setName] = useState('');
     const [memberId, setMemberId] = useState('');
     const [role, setRole] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Basic check if member ID exists
@@ -23,11 +25,20 @@ const AddMember = () => {
         const newMember = {
             name: name.trim(),
             id: memberId.trim(),
-            role: role
+            role: role,
+            password: password.trim()
         };
-        setMembers([...members, newMember]);
-        alert('Member safely registered in the database.');
-        navigate('/admin/members');
+
+        setIsSubmitting(true);
+        try {
+            await setMembers([...members, newMember]);
+            alert('Member successfully registered in the database!');
+            navigate('/admin/members');
+        } catch (err) {
+            alert('Failed to register member. Please check server connection.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -57,7 +68,13 @@ const AddMember = () => {
                                 <option value="Librarian">Librarian</option>
                             </select>
                         </div>
-                        <button type="submit" className="btn-primary w-100" style={{ marginTop: '0.75rem', padding: '1rem' }}>Register Member</button>
+                        <div className="input-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="Set a login password" value={password} onChange={e => setPassword(e.target.value)} required />
+                        </div>
+                        <button type="submit" className="btn-primary w-100" style={{ marginTop: '0.75rem', padding: '1rem' }} disabled={isSubmitting}>
+                            {isSubmitting ? 'Registering...' : 'Register Member'}
+                        </button>
                     </form>
                 </div>
             </div>

@@ -12,6 +12,7 @@ import LibrarianDashboard from './pages/librarian/Dashboard';
 import LibrarianBooks from './pages/librarian/Books';
 import LibrarianAddBook from './pages/librarian/AddBook';
 import LibrarianFines from './pages/librarian/Fines';
+import LibrarianMembers from './pages/librarian/Members';
 import StudentDashboard from './pages/student/Dashboard';
 import StudentBooks from './pages/student/Books';
 import FacultyDashboard from './pages/faculty/Dashboard';
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/librarian/books" element={<LibrarianBooks />} />
           <Route path="/librarian/add-book" element={<LibrarianAddBook />} />
           <Route path="/librarian/fines" element={<LibrarianFines />} />
+          <Route path="/librarian/members" element={<LibrarianMembers />} />
           
           {/* Student Routes */}
           <Route path="/student" element={<StudentDashboard />} />

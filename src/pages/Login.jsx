@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { StoreContext } from '../contexts/StoreContext';
+import { message } from 'antd';
 
 const Login = () => {
     const { login, members, setMembers } = useContext(StoreContext);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(!location.state?.isSignup);
     const [userId, setUserId] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -33,19 +35,19 @@ const Login = () => {
 
             } catch (error) {
                 if (error.response && error.response.status === 401) {
-                    alert('Invalid password.');
+                    message.error('Invalid password.');
                 } else if (error.response && error.response.status === 404) {
-                    alert('User not found.');
+                    message.error('User not found.');
                 } else if (error.response && error.response.status === 403) {
-                    alert('Role mismatch.');
+                    message.error('Role mismatch.');
                 } else {
-                    alert('Login failed. Please try again.');
+                    message.error('Login failed. Please try again.');
                 }
             }
         } else {
             // Signup Logic
-            if (role === 'admin' || role === 'librarian') {
-                alert('Admin and Librarian roles cannot be created via public signup.');
+            if (role === 'admin') {
+                message.error('Admin roles cannot be created via public signup.');
                 return;
             }
 
@@ -62,15 +64,16 @@ const Login = () => {
                 setMembers([...members, newMember]);
                 login(newMember.id, newMember.name, newMember.role);
 
-                alert('Signup successful! Welcome to the Library.');
+                message.success('Signup successful! Welcome to the Library.');
 
                 if (role === 'Student') navigate('/student');
                 if (role === 'Faculty') navigate('/faculty');
+                if (role === 'Librarian' || role === 'librarian') navigate('/librarian');
             } catch (error) {
                 if (error.response && error.response.data && error.response.data.error && error.response.data.error.includes('duplicate key')) {
-                    alert('Member ID already exists! Please choose another one or login.');
+                    message.error('Member ID already exists! Please choose another one or login.');
                 } else {
-                    alert('Signup failed. Please check your details.');
+                    message.error('Signup failed. Please check your details.');
                 }
             }
         }
@@ -136,11 +139,9 @@ const Login = () => {
                         >
                             <option value="Student">Student</option>
                             <option value="Faculty">Faculty</option>
+                            <option value="Librarian">Librarian</option>
                             {isLogin && (
-                                <>
-                                    <option value="librarian">Librarian</option>
-                                    <option value="admin">Administrator</option>
-                                </>
+                                <option value="admin">Administrator</option>
                             )}
                         </select>
                     </div>

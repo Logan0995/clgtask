@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Layout from '../../components/Layout';
 import { StoreContext } from '../../contexts/StoreContext';
+import { message } from 'antd';
 
 const Dashboard = () => {
     const { books, issueRequests, setIssueRequests, activeUser } = useContext(StoreContext);
@@ -12,7 +13,7 @@ const Dashboard = () => {
         const book = books.find(b => b.id === bookId);
         if (!book) return;
         setIssueRequests([...issueRequests, { bookId: book.id, bookTitle: book.title, memberId: activeUser, type: 'return', status: 'Return Pending' }]);
-        alert(`Return request sent to librarian for "${book.title}".`);
+        message.success(`Return request sent to librarian for "${book.title}".`);
     };
 
     const handleRequestIssue = (e) => {
@@ -20,10 +21,10 @@ const Dashboard = () => {
         const book = books.find(b => b.id.toLowerCase() === requestId.trim().toLowerCase());
         if (book) {
             setIssueRequests([...issueRequests, { bookId: book.id, bookTitle: book.title, memberId: activeUser, type: 'issue', status: 'Pending' }]);
-            alert(`Issue request sent to librarian for "${book.title}".`);
+            message.success(`Issue request sent to librarian for "${book.title}".`);
             setRequestId('');
         } else {
-            alert('Invalid Book ID. Check the catalog for the correct ID.');
+            message.error('Invalid Book ID. Check the catalog for the correct ID.');
         }
     };
 

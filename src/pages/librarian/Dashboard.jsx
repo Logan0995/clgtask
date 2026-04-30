@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Modal, message } from 'antd';
 import Layout from '../../components/Layout';
 import { StoreContext } from '../../contexts/StoreContext';
 
@@ -10,6 +11,9 @@ const Dashboard = () => {
     const [returnMemberId, setReturnMemberId] = useState('');
     const [returnBookId, setReturnBookId] = useState('');
 
+    const [isIssueModalVisible, setIsIssueModalVisible] = useState(false);
+    const [isReturnModalVisible, setIsReturnModalVisible] = useState(false);
+
     const handleProcessRequest = (index, isApproved) => {
         const req = issueRequests[index];
         if (isApproved) {
@@ -19,15 +23,15 @@ const Dashboard = () => {
                     setHistoryStore([...historyStore, { title: book.title, memberId: req.memberId, returnDate: new Date().toISOString() }]);
                     const updatedBooks = books.map(b => b.id === book.id ? { ...b, status: 'Available', issuedTo: null, dueDate: null } : b);
                     setBooks(updatedBooks);
-                    alert(`Return approved. "${book.title}" is now available.`);
+                    message.success(`Return approved. "${book.title}" is now available.`);
                 } else {
                     if (book.status !== 'Issued') {
                         const newStatus = req.status.includes('Faculty') ? 'Reserved' : 'Issued';
                         const updatedBooks = books.map(b => b.id === book.id ? { ...b, status: newStatus, issuedTo: req.memberId, dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString() } : b);
                         setBooks(updatedBooks);
-                        alert(`Issue approved. "${book.title}" issued to ${req.memberId}.`);
+                        message.success(`Issue approved. "${book.title}" issued to ${req.memberId}.`);
                     } else {
-                        alert('ERROR: Book is already issued or unavailable.');
+                        message.error('Book is already issued or unavailable.');
                     }
                 }
             }
@@ -44,11 +48,12 @@ const Dashboard = () => {
         if (book) {
             const updatedBooks = books.map(b => b.id === book.id ? { ...b, status: 'Issued', issuedTo: issueMemberId.trim(), dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString() } : b);
             setBooks(updatedBooks);
-            alert(`Success! "${book.title}" formally issued to ${issueMemberId.trim()}.`);
+            message.success(`Success! "${book.title}" formally issued to ${issueMemberId.trim()}.`);
             setIssueMemberId('');
             setIssueBookId('');
+            setIsIssueModalVisible(false);
         } else {
-            alert('ERROR: Book not found or actively unavailable.');
+            message.error('Book not found or actively unavailable.');
         }
     };
 
@@ -59,11 +64,12 @@ const Dashboard = () => {
             setHistoryStore([...historyStore, { title: book.title, memberId: returnMemberId.trim(), returnDate: new Date().toISOString() }]);
             const updatedBooks = books.map(b => b.id === book.id ? { ...b, status: 'Available', issuedTo: null, dueDate: null } : b);
             setBooks(updatedBooks);
-            alert(`Success! "${book.title}" recorded as returned by ${returnMemberId.trim()}.`);
+            message.success(`Success! "${book.title}" recorded as returned by ${returnMemberId.trim()}.`);
             setReturnMemberId('');
             setReturnBookId('');
+            setIsReturnModalVisible(false);
         } else {
-            alert('ERROR: Active issue record not verifiable for this combination.');
+            message.error('Active issue record not verifiable for this combination.');
         }
     };
 
@@ -106,41 +112,44 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                {/* Manual Issue */}
-                <div className="management-card">
-                    <div className="card-header"><h3>↗ Issue Book Manually</h3></div>
-                    <div className="card-body" style={{ padding: '2rem 1.5rem' }}>
-                        <form className="functional-form" onSubmit={handleIssueBook}>
-                            <div className="input-group">
-                                <label>Member ID</label>
-                                <input type="text" placeholder="e.g. S001" value={issueMemberId} onChange={e => setIssueMemberId(e.target.value)} required />
-                            </div>
-                            <div className="input-group">
-                                <label>Book ID</label>
-                                <input type="text" placeholder="e.g. B001" value={issueBookId} onChange={e => setIssueBookId(e.target.value)} required />
-                            </div>
-                            <button type="submit" className="btn-primary w-100" style={{ padding: '1rem' }}>Issue Book</button>
-                        </form>
+                {/* Quick Action Buttons */}
+                <div className="management-card" style={{ gridColumn: '1 / -1' }}>
+                    <div className="card-header"><h3>⚡ Quick Actions</h3></div>
+                    <div className="card-body" style={{ display: 'flex', gap: '1rem', padding: '1.5rem' }}>
+                        <button className="btn-primary" onClick={() => setIsIssueModalVisible(true)}>↗ Issue Book Manually</button>
+                        <button className="btn-outline" onClick={() => setIsReturnModalVisible(true)}>↩ Process Return Manually</button>
                     </div>
                 </div>
 
-                {/* Manual Return */}
-                <div className="management-card">
-                    <div className="card-header"><h3>↩ Process Return Manually</h3></div>
-                    <div className="card-body" style={{ padding: '2rem 1.5rem' }}>
-                        <form className="functional-form" onSubmit={handleReturnBook}>
-                            <div className="input-group">
-                                <label>Member ID</label>
-                                <input type="text" placeholder="e.g. S001" value={returnMemberId} onChange={e => setReturnMemberId(e.target.value)} required />
-                            </div>
-                            <div className="input-group">
-                                <label>Book ID</label>
-                                <input type="text" placeholder="e.g. B001" value={returnBookId} onChange={e => setReturnBookId(e.target.value)} required />
-                            </div>
-                            <button type="submit" className="btn-outline w-100" style={{ padding: '1rem', borderWidth: '2px' }}>Accept Return</button>
-                        </form>
-                    </div>
-                </div>
+                {/* Issue Book Modal */}
+                <Modal title="Issue Book Manually" open={isIssueModalVisible} onCancel={() => setIsIssueModalVisible(false)} footer={null}>
+                    <form className="functional-form" onSubmit={handleIssueBook} style={{ paddingTop: '1rem' }}>
+                        <div className="input-group">
+                            <label>Member ID</label>
+                            <input type="text" placeholder="e.g. S001" value={issueMemberId} onChange={e => setIssueMemberId(e.target.value)} required />
+                        </div>
+                        <div className="input-group">
+                            <label>Book ID</label>
+                            <input type="text" placeholder="e.g. B001" value={issueBookId} onChange={e => setIssueBookId(e.target.value)} required />
+                        </div>
+                        <button type="submit" className="btn-primary w-100" style={{ padding: '1rem' }}>Issue Book</button>
+                    </form>
+                </Modal>
+
+                {/* Return Book Modal */}
+                <Modal title="Process Return Manually" open={isReturnModalVisible} onCancel={() => setIsReturnModalVisible(false)} footer={null}>
+                    <form className="functional-form" onSubmit={handleReturnBook} style={{ paddingTop: '1rem' }}>
+                        <div className="input-group">
+                            <label>Member ID</label>
+                            <input type="text" placeholder="e.g. S001" value={returnMemberId} onChange={e => setReturnMemberId(e.target.value)} required />
+                        </div>
+                        <div className="input-group">
+                            <label>Book ID</label>
+                            <input type="text" placeholder="e.g. B001" value={returnBookId} onChange={e => setReturnBookId(e.target.value)} required />
+                        </div>
+                        <button type="submit" className="btn-outline w-100" style={{ padding: '1rem', borderWidth: '2px' }}>Accept Return</button>
+                    </form>
+                </Modal>
             </div>
         </Layout>
     );

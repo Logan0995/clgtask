@@ -1,5 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import Layout from '../../components/Layout';
+import { message } from 'antd';
 import { StoreContext } from '../../contexts/StoreContext';
 
 const Dashboard = () => {
@@ -12,7 +13,7 @@ const Dashboard = () => {
     const issuedBooks = books.filter(b => b.status === 'Issued').length;
 
     const handleGenerateReports = () => {
-        alert(`System Report:\nTotal Books: ${books.length}\nIssued Books: ${issuedBooks}\nTotal Members: ${members.length}`);
+        message.info(`System Report:\nTotal Books: ${books.length}\nIssued Books: ${issuedBooks}\nTotal Members: ${members.length}`);
     };
 
     const handleBackup = () => {
@@ -24,7 +25,7 @@ const Dashboard = () => {
         a.download = 'library_backup.json';
         a.click();
         URL.revokeObjectURL(url);
-        alert('Database Backup safely downloaded.');
+        message.success('Database Backup safely downloaded.');
     };
 
     const handleRestore = (e) => {
@@ -38,9 +39,9 @@ const Dashboard = () => {
                 if (data.members) setMembers(data.members);
                 if (data.history) setHistoryStore(data.history);
                 if (data.recommendations) setRecommendations(data.recommendations);
-                alert('Database Local Storage restitched successfully!');
+                message.success('Database Local Storage restitched successfully!');
             } catch (err) {
-                alert('CRITICAL: Invalid JSON Backup format.');
+                message.error('CRITICAL: Invalid JSON Backup format.');
             }
         };
         reader.readAsText(file);

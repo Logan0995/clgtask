@@ -25,7 +25,8 @@ const Sidebar = ({ role }) => {
         { path: '/librarian/books', label: 'View Catalog', icon: '📖' },
         { path: '/librarian/add-book', label: 'Add Book', icon: '➕' },
         { path: '/librarian', label: 'Issue & Return', icon: '📝' },
-        { path: '/librarian/fines', label: 'Fines & Reports', icon: '💰' }
+        { path: '/librarian/fines', label: 'Fines & Reports', icon: '💰' },
+        { path: '/librarian/members', label: 'View Members', icon: '👥' }
     ];
 
     const studentLinks = [

@@ -90,9 +90,13 @@ export const StoreProvider = ({ children }) => {
                 const deleted = members.filter(m => !newMembers.find(nm => nm.id === m.id))[0];
                 if (deleted) await axios.delete(`${API_URL}/members/${deleted.id}`);
             }
-            setMembersState(newMembers);
+            // Refresh from server to get latest data
+            const res = await axios.get(`${API_URL}/members`);
+            setMembersState(res.data);
         } catch (error) {
             console.error("Error syncing members:", error);
+            message.error(error.response?.data?.error || "Failed to sync members with server");
+            throw error; // re-throw so caller can handle it
         }
     };
 

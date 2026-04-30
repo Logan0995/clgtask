@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Layout from '../../components/Layout';
 import { StoreContext } from '../../contexts/StoreContext';
+import { message } from 'antd';
 
 const Dashboard = () => {
     const { historyStore, issueRequests, setIssueRequests, recommendations, setRecommendations, activeUser } = useContext(StoreContext);

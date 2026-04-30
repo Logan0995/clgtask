@@ -110,7 +110,17 @@ router.delete('/books/:id', async (req, res) => {
 // --- Members/Users Routes ---
 router.get('/members', async (req, res) => {
     try {
-        const members = await User.find({ role: { $in: ['Student', 'Faculty'] } });
+        const members = await User.find({ role: { $in: ['Student', 'Faculty', 'Librarian'] } });
+        res.json(members);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// All members (for librarian view - shows everyone with their IDs)
+router.get('/members/all', async (req, res) => {
+    try {
+        const members = await User.find({ role: { $in: ['Student', 'Faculty', 'Librarian'] } }, { password: 0 });
         res.json(members);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -119,6 +129,10 @@ router.get('/members', async (req, res) => {
 
 router.post('/members', async (req, res) => {
     try {
+        const existingUser = await User.findOne({ id: req.body.id });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Member ID already exists' });
+        }
         const member = new User(req.body);
         await member.save();
         res.status(201).json(member);
