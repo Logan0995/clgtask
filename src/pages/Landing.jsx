@@ -89,11 +89,9 @@ const Landing = () => {
               {displayBooks.map(book => (
                   <div key={book.id} className="management-card" style={{ padding: '2rem', textAlign: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
                       {book.coverUrl ? (
-                          <img src={book.coverUrl} alt={book.title} style={{ width: '140px', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1.5rem', boxShadow: 'var(--shadow-md)' }} />
+                          <img src={`/images/${book.coverUrl.split('/').pop()}`} alt={book.title} style={{ width: '140px', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1.5rem', boxShadow: 'var(--shadow-md)' }} onError={(e) => { e.target.src = '/images/default.png'; }} />
                       ) : (
-                          <div style={{ width: '140px', height: '200px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                              <BookOpen size={48} color="var(--text-muted)" />
-                          </div>
+                          <img src="/images/default.png" alt="Default Cover" style={{ width: '140px', height: '200px', objectFit: 'cover', borderRadius: '8px', marginBottom: '1.5rem', boxShadow: 'var(--shadow-md)' }} />
                       )}
                       <h3 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '0.5rem' }}>{book.title}</h3>
                       <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1rem' }}>By {book.author}</p>

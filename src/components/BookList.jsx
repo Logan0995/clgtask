@@ -19,8 +19,11 @@ const BookList = ({ books, isGrid, actionRender, emptyMessage = "No books availa
                 if (book.status === 'Reserved') statusClass = 'status-reserved';
 
                 let coverSrc = book.coverUrl;
-                if (coverSrc && !coverSrc.startsWith('http') && !coverSrc.startsWith('..') && !coverSrc.startsWith('/')) {
-                    coverSrc = '/' + coverSrc;
+                if (coverSrc) {
+                    const filename = coverSrc.split('/').pop();
+                    coverSrc = `/images/${filename}`;
+                } else {
+                    coverSrc = "/images/default.png";
                 }
 
                 return (
@@ -28,15 +31,12 @@ const BookList = ({ books, isGrid, actionRender, emptyMessage = "No books availa
                         {isGrid && (
                             <>
                                 <div className={`status-badge ${statusClass}`}>{book.status}</div>
-                                {coverSrc ? (
-                                    <img
-                                        src={coverSrc}
-                                        alt="Cover"
-                                        className="book-cover-image"
-                                        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                                    />
-                                ) : null}
-                                <div className="book-cover-placeholder" style={{ display: coverSrc ? 'none' : 'flex' }}>📖</div>
+                                <img
+                                    src={coverSrc}
+                                    alt="Cover"
+                                    className="book-cover-image"
+                                    onError={(e) => { e.target.src = '/images/default.png'; }}
+                                />
                             </>
                         )}
                         <div className="item-info">
